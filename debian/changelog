@@ -1,3 +1,9 @@
+mutter (3.14.4-1~deb8u1scibian1) jessie; urgency=low
+
+  * HP ZBook series screen detection workaround
+
+ -- Scibian Packaging Team <packaging@scibian.org>  Tue, 06 Sep 2016 14:42:08 +0200
+
 mutter (3.14.4-1~deb8u1) jessie; urgency=low
 
   * New upstream translation and bugfix release.
