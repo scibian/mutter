@@ -1,0 +1,25 @@
+Description: HP ZBook series screen detection workaround
+Author: Scibian Packaging Team <packaging@scibian.org>
+
+--- a/src/backends/x11/meta-monitor-manager-xrandr.c
++++ b/src/backends/x11/meta-monitor-manager-xrandr.c
+@@ -509,7 +509,18 @@
+           MonitorInfo *parsed_edid;
+ 
+ 	  meta_output->winsys_id = resources->outputs[i];
+-	  meta_output->name = g_strdup (output->name);
++
++	  /* HP ZBook series screen detection workaround */
++          const char *filename;
++          char *text;
++          gsize length;
++          filename = "/sys/class/dmi/id/product_name";
++
++          if (g_file_get_contents (filename, &text, &length, NULL) && g_str_has_prefix (text, "HP ZBook") && g_str_has_prefix (output->name, "DP-3"))
++            meta_output->name = g_strdup ("LVDS-0");
++          else
++            meta_output->name = g_strdup (output->name);
++          g_free (text);
+ 
+           edid = read_output_edid (manager_xrandr, meta_output->winsys_id);
+           if (edid)
